@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <title>WE</title>
+  </head>
+  <body>
+    <div
+      class="aos-wrapper col-12 d-flex justify-content-center"
+      data-aos="fade"
+      data-aos-duration="2000"
+    >
+      <div class="body-wrapper mt-5">
+        <div class="container">
+          <div class="logo-container d-flex justify-content-center">
+            <img
+              src="images/fringe-logo-trans.png"
+              alt="Fringe Logo"
+              class="logo"
+            />
+          </div>
+          <div class="d-block d-flex justify-content-center logo-text">
+            fringe
+          </div>
+        </div>
+
+        <div class="container d-flex justify-content-center mt-5">
+          <form class="login-form" id="loginForm">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control input-box"
+                id="username"
+                aria-describedby="username"
+                placeholder="Username"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control input-box"
+                id="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label grey-text" for="forgotPasswordLink"
+                >Forgot password?</label
+              >
+            </div>
+
+            <div class="form-group" id="loginError" style="display: none;">
+              <label class="form-label grey-text" for="loginerror"></label>
+            </div>
+
+            <button type="submit" class="btn orange-btn">
+              Login
+            </button>
+            <p class="text-left grey-text mt-4 mb-2">
+              Don't have an account?
+            </p>
+            <a href="register.html" class="white-links">
+              <button type="button" class="btn orange-btn">
+                Register
+              </button>
+            </a>
+          </form>
+        </div>
+      </div>
+
+      <!-- end of container -->
+    </div>
+
+    <script src="js/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true
+      });
+    </script>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+
+    <!-- <script src="js/firebase-init.js"></script> -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyB6qk-px-fufpKLrjKJi2OCZ9hZN3ydmDs",
+        authDomain: "fringemessenger.firebaseapp.com",
+        databaseURL: "https://fringemessenger.firebaseio.com",
+        projectId: "fringemessenger",
+        storageBucket: "fringemessenger.appspot.com",
+        messagingSenderId: "884337049235",
+        appId: "1:884337049235:web:de3d234af05f18459e9766",
+        measurementId: "G-FPSVVRXJCP"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // make auth and firestore references
+
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+    </script>
+    <script src="js/auth-login.js"></script>
+    <script src="js/auth-status-false.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

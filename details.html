@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <!-- fontawesome CSS -->
+    <link rel="stylesheet" href="css/fontawesome.css" />
+    <!-- fontawesome JS -->
+    <script src="js/fontawesome.js"></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/scroll.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <title>WE</title>
+  </head>
+
+  <body>
+    <div class="aos-wrapper" data-aos="fade" data-aos-duration="2000">
+      <div class="wrapper container" style="margin-top: 30%;">
+        <h3 class="mt-5">Enter your name and total income to get started.</h3>
+
+        <!-- form -->
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control input-box"
+            id="fullName"
+            aria-describedby="username"
+            placeholder="Name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control input-box"
+            id="totalIncome"
+            placeholder="Total Income"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn orange-btn" onclick="takeMeHome()">
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- end of container -->
+
+    <script src="js/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true
+      });
+    </script>
+    <script>
+      function takeMeHome() {
+        var totalIncome = document.getElementById("totalIncome").value;
+        var fullName = document.getElementById("fullName").value;
+
+        localStorage.totalIncome = totalIncome;
+        localStorage.fullName = fullName;
+
+        window.location.replace("home.html");
+      }
+    </script>
+  </body>
+</html>

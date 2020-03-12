@@ -1,0 +1,221 @@
+@font-face {
+  font-family: "Ubuntu";
+  src: url("fonts/Ubuntu-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Ubuntu";
+  src: url("fonts/Ubuntu-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Ubuntu";
+  src: url("fonts/Ubuntu-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Ubuntu";
+  src: url("fonts/Ubuntu-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  background: #ffffff;
+  color: #000;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.body-wrapper {
+  width: 100%;
+}
+.centered-logo {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.centered-content {
+  margin-top: 20vh;
+}
+
+.large-text {
+  font-size: 10vw !important;
+}
+
+.accent {
+  color: #6a3fc2;
+}
+
+.white-links {
+  color: #ffffff;
+}
+.white-links:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+.white-links:active {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.grey-text {
+  color: rgb(200, 200, 200);
+}
+
+.footer-flexible {
+  color: #969696;
+  margin-top: 10px;
+  text-align: center;
+}
+.footer-bottom-aligned {
+  position: absolute;
+  bottom: 0px;
+  color: #969696;
+}
+
+.logo {
+  width: 30vw;
+  height: auto;
+}
+
+.logo-small {
+  vertical-align: top;
+  width: 13vw;
+  height: auto;
+}
+
+.logo-text {
+  font-size: 10vw;
+  color: rgb(86, 43, 154);
+  font-weight: bold;
+  background: linear-gradient(270deg, #4a00e0, #8e2de2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-big {
+  border-radius: 13px;
+  padding: 0px 10px;
+  background-color: #1e1d22;
+  font-size: 12vw;
+  color: rgb(200, 200, 200);
+}
+
+.purple {
+  color: rgb(86, 43, 154);
+  font-weight: bold;
+  background: -webkit-linear-gradient(#4a00e0, #8e2de2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.orange-btn {
+  padding: 10px 10px;
+  font-size: 5vw;
+  font-weight: bold;
+  width: 100%;
+  border-radius: 3px;
+  color: #ffffff;
+  border: 1px solid rgb(106, 63, 174);
+  background: #8e2de2;
+  background: -webkit-linear-gradient(315deg, #4a00e0, #8e2de2);
+  background: linear-gradient(315deg, #4a00e0, #8e2de2);
+}
+
+.orange-btn:active {
+  color: #ffffff;
+  -webkit-box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
+}
+
+.input-box {
+  padding: 25px 10px;
+  color: rgb(30, 30, 30);
+  border: 1px solid rgb(86, 43, 154);
+  border-radius: 3px;
+  background: rgb(250, 250, 250);
+}
+.input-box:focus {
+  border: 1px solid rgb(86, 43, 154);
+  border-radius: 1px;
+  outline: none;
+  -webkit-box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
+}
+
+/* Firefox old*/
+@-moz-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* IE */
+@-ms-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* Opera and prob css3 final iteration */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.blink-logo {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -moz-animation: blink normal 2s infinite ease-in-out; /* Firefox */
+  -webkit-animation: blink normal 2s infinite ease-in-out; /* Webkit */
+  -ms-animation: blink normal 2s infinite ease-in-out; /* IE */
+  animation: blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+}
+
+.header {
+  background-color: #6200ee;
+  color: #fff;
+}

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <!-- fontawesome CSS -->
+    <link rel="stylesheet" href="css/fontawesome.css" />
+    <!-- fontawesome JS -->
+    <script src="js/fontawesome.js"></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/scroll.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <title>WE</title>
+  </head>
+  <body>
+    <div class="aos-wrapper" data-aos="fade" data-aos-duration="2000">
+      <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+          <div id="dismiss">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+
+          <div class="sidebar-header pt-5 pb-1 pl-2">
+            <p id="usernameDiv"></p>
+          </div>
+
+          <ul class="list-unstyled components">
+            <li>
+              <a href="home.html">Home<i class="fas fa-home"></i></a>
+            </li>
+            <li>
+              <a href="new-chat.html"
+                ><i class="fas fa-comment-alt"></i>New Chat</a
+              >
+            </li>
+            <li>
+              <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+            </li>
+            <li class="active">
+              <a href="#"><i class="fas fa-globe-asia"></i>About</a>
+            </li>
+            <li>
+              <a href="#" id="logout"
+                ><i class="fas fa-sign-out-alt"></i>Logout</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+          <div class="navbar-custom pl-3 pt-3 pb-3">
+            <table>
+              <tr>
+                <td>
+                  <i
+                    class="fas fa-align-left open-button"
+                    id="sidebarCollapse"
+                  ></i>
+                </td>
+                <td>
+                  <img
+                    src="images/fringe-logo-trans.png"
+                    alt=""
+                    class="logo-small"
+                  />
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="container toast-container mt-5">
+            <!-- toast -->
+            <div class="toast mt-2" data-autohide="false">
+              <div class="toast-header orange">
+                <i class="fas fa-mobile-alt mr-2"></i>
+                <strong class="mr-auto">About Fringe Messenger</strong>
+                <small></small>
+              </div>
+              <div class="toast-body text-justify">
+                DHS is a symmetric-key cryptographic system designed and
+                developed by
+                <ul class="mt-2">
+                  <li>Daniel Mark</li>
+                  <li>Harrison Mathew</li>
+                  <li>Sajwa Furood</li>
+                </ul>DHS
+                claims to be the world's only cryptographic system that cannot
+                be broken even by a 'Quantum Computer.'
+                <br><br>
+                This system makes use of
+                what's known as a 'BlackBox' to create a secret mapping of a
+                single input variable to 1 of either 32 possible outcomes.
+                <br><br>
+                You
+                can read a detailed explanation
+                <a href="https://dhs.danielmarkd.com/" class="white-links"
+                  >here.</a
+                >
+              </div>
+            </div>
+            <!-- end of toast 
+
+            <h5 class="d-flex justify-content-center mt-4 mb-3">Developers</h5>
+
+            <div class="d-flex pl-3">
+              <ul class="list-unstyled">
+                <li class="media">
+                  <img
+                    src="images/danny.png"
+                    class="mr-3 media-object-icon"
+                    alt="Daniel Mark"
+                  />
+                  <div class="media-body text-justify">
+                    <h5 class="mt-3 mb-1">Daniel Mark</h5>
+                    <a href="https://danielmarkd.com/" class="grey-text"
+                      >danielmarkd.com</a
+                    >
+                  </div>
+                </li>
+                <li class="media my-4">
+                  <img
+                    src="images/harrison.png"
+                    class="mr-3 media-object-icon"
+                    alt="Harrison Mathew"
+                  />
+                  <div class="media-body">
+                    <h5 class="mt-3 mb-1">Harrison Mathew</h5>
+                    <a href="http://harrison.ml/" class="grey-text"
+                      >harrison.ml</a
+                    >
+                  </div>
+                </li>
+                <li class="media">
+                  <img
+                    src="images/sajwa.png"
+                    class="mr-3 media-object-icon"
+                    alt="Sajwa Furood"
+                  />
+                  <div class="media-body">
+                    <h5 class="mt-3 mb-1">Sajwa Furood</h5>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- main content container -->
+        </div>
+      </div>
+
+      <div class="overlay"></div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="js/sidebar.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#sidebar").mCustomScrollbar({
+          theme: "minimal"
+        });
+
+        $("#dismiss, .overlay").on("click", function() {
+          $("#sidebar").removeClass("active");
+          $(".overlay").removeClass("active");
+        });
+
+        $("#sidebarCollapse").on("click", function() {
+          $("#sidebar").addClass("active");
+          $(".overlay").addClass("active");
+          $(".collapse.in").toggleClass("in");
+          $("a[aria-expanded=true]").attr("aria-expanded", "false");
+        });
+      });
+    </script>
+
+    <!-- end of container -->
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+
+    <!-- <script src="js/firebase-init.js"></script> -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyB6qk-px-fufpKLrjKJi2OCZ9hZN3ydmDs",
+        authDomain: "fringemessenger.firebaseapp.com",
+        databaseURL: "https://fringemessenger.firebaseio.com",
+        projectId: "fringemessenger",
+        storageBucket: "fringemessenger.appspot.com",
+        messagingSenderId: "884337049235",
+        appId: "1:884337049235:web:de3d234af05f18459e9766",
+        measurementId: "G-FPSVVRXJCP"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // make auth and firestore references
+
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+    </script>
+    <script src="js/auth-home.js"></script>
+    <script src="js/auth-logout.js"></script>
+
+    <script src="js/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true
+      });
+      $(document).ready(function() {
+        $(".toast").toast("show");
+      });
+    </script>
+  </body>
+</html>

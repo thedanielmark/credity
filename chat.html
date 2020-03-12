@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <!-- fontawesome CSS -->
+    <link rel="stylesheet" href="css/fontawesome.css" />
+    <!-- fontawesome JS -->
+    <script src="js/fontawesome.js"></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/scroll.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <title>WE</title>
+  </head>
+
+  <body>
+    <div class="aos-wrapper" data-aos="fade" data-aos-duration="2000">
+      <div class="wrapper">
+        <!-- Page Content  -->
+        <div id="content">
+          <div class="container top-bar-container pl-4 pb-3 pt-3">
+            <a href="home.html" class="back-button">
+              <i class="fas fa-chevron-left"></i>
+            </a>
+
+            <div class="participant-name-container pt-4 pb-4">
+              <span id="participantName" class="participant-name"></span>
+            </div>
+          </div>
+          <!-- end of row -->
+
+          <div class="container chats-container d-block">
+            <div id="chats-table"></div>
+          </div>
+
+          <div class="container pb-3 input-group chat-input-container">
+            <input
+              id="messageInput"
+              type="text"
+              class="form-control chat-input"
+              placeholder="Type a message"
+              aria-label="Type a message"
+              aria-describedby="Type a message"
+            />
+            <div class="input-group-append">
+              <button class="btn" type="button" id="sendButton">
+                <i class="fas fa-paper-plane white-links"></i>
+              </button>
+            </div>
+          </div>
+          <!-- end of input container -->
+        </div>
+        <!-- end of content -->
+      </div>
+      <!-- end of wrapper -->
+
+      <div class="overlay"></div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- end of container -->
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
+
+    <!-- <script src="js/firebase-init.js"></script> -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyB6qk-px-fufpKLrjKJi2OCZ9hZN3ydmDs",
+        authDomain: "fringemessenger.firebaseapp.com",
+        databaseURL: "https://fringemessenger.firebaseio.com",
+        projectId: "fringemessenger",
+        storageBucket: "fringemessenger.appspot.com",
+        messagingSenderId: "884337049235",
+        appId: "1:884337049235:web:de3d234af05f18459e9766",
+        measurementId: "G-FPSVVRXJCP"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // make auth and firestore references
+
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+    </script>
+    <script src="js/auth-home.js"></script>
+
+    <script src="js/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true
+      });
+    </script>
+
+    <script>
+      // get uid
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // get the list of participants
+          var uid = firebase.auth().currentUser.uid;
+
+          var getParams = function(url) {
+            var params = {};
+            var parser = document.createElement("a");
+            parser.href = url;
+            var query = parser.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+              var pair = vars[i].split("=");
+              params[pair[0]] = decodeURIComponent(pair[1]);
+            }
+            return params;
+          };
+
+          var participant = getParams(window.location.href).participant;
+          var participantName = getParams(window.location.href).participantName;
+          document.getElementById(
+            "participantName"
+          ).innerHTML = participantName;
+
+          setInterval(getMessage, 2000);
+
+          window.initialResponse = "";
+
+          function getMessage() {
+            $.ajax({
+              type: "POST",
+              url: "https://api.scopelife.in/get-message.php",
+              datatype: "html",
+              data: {
+                uid: uid,
+                participant: participant
+              },
+              success: function(response) {
+                // setting initial response value as the one received above
+                if (initialResponse != response) {
+                  console.log(uid);
+                  // delete child elements from the chats-table node
+                  document.getElementById("chats-table").innerHTML = "";
+                  var parsedResponse = JSON.parse(response);
+                  for (var x in parsedResponse) {
+                    //console.log(parsedResponse[x]);
+                    var row = document.createElement("a");
+
+                    // set custom bubbles here
+                    if (parsedResponse[x].sender === uid) {
+                      row.setAttribute("class", "myBubble");
+                    } else {
+                      row.setAttribute("class", "theirBubble");
+                    }
+
+                    var textnode = document.createTextNode(
+                      parsedResponse[x].messageContent
+                    );
+                    row.appendChild(textnode);
+                    document.getElementById("chats-table").appendChild(row);
+                  }
+                } else {
+                  // do nothing
+                }
+              },
+              error: function(error) {}
+            });
+          } // end of getMessage() function
+
+          document
+            .getElementById("sendButton")
+            .addEventListener("click", sendMessage);
+
+          function sendMessage() {
+            var message = document.getElementById("messageInput").value;
+            document.getElementById("messageInput").value = "";
+            $.ajax({
+              type: "POST",
+              url: "https://api.scopelife.in/send-message.php",
+              datatype: "html",
+              data: {
+                uid: uid,
+                participant: participant,
+                message: message
+              },
+              success: function(response) {},
+              error: function(error) {}
+            });
+          } // end of sendMessage()
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <title>WE</title>
+  </head>
+  <body>
+    <div
+      class="aos-wrapper col-12 d-flex justify-content-center"
+      data-aos="fade"
+      data-aos-duration="2000"
+    >
+      <div class="body-wrapper mt-5">
+        <div class="container mt-5">
+          <div class="logo-container d-flex justify-content-center">
+            <img
+              src="images/fringe-logo-trans.png"
+              alt="Fringe Logo"
+              class="logo"
+            />
+          </div>
+          <div class="d-block d-flex justify-content-center logo-text">
+            fringe
+          </div>
+        </div>
+
+        <div class="container d-flex justify-content-center mt-4 pink">
+          <h5>
+            <b>
+              Sign up for Fringe
+            </b>
+          </h5>
+        </div>
+
+        <div class="container d-flex justify-content-center col-12 pt-3 pb-4">
+          <form id="registerForm" class="login-form">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control input-box"
+                id="fullName"
+                placeholder="Full Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <select class="custom-select input-box" id="gender" required>
+                <option selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input
+                type="date"
+                class="form-control input-box"
+                id="dob"
+                aria-describedby="dob"
+                placeholder="Date of Birth"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control input-box"
+                id="username"
+                placeholder="Unique username"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control input-box"
+                id="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control input-box"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                required
+              />
+            </div>
+            <div class="form-group" id="signUpError" style="display: none;">
+              <label class="form-label grey-text"></label>
+            </div>
+            <button
+              id="submitButton"
+              class="btn orange-btn"
+              onclick="registerUser()"
+            >
+              Next
+            </button>
+
+            <div class="d-flex justify-content-center mt-3">
+              <span
+                id="buttonLoader"
+                class="spinner-grow spinner-grow-sm"
+                role="status"
+                aria-hidden="true"
+                style="display: none;"
+              ></span>
+            </div>
+
+            <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+            <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+            <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+
+            <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+            <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+
+            <!-- Add Firebase products that you want to use -->
+            <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+
+            <script>
+              const firebaseConfig = {
+                apiKey: "AIzaSyB6qk-px-fufpKLrjKJi2OCZ9hZN3ydmDs",
+                authDomain: "fringemessenger.firebaseapp.com",
+                databaseURL: "https://fringemessenger.firebaseio.com",
+                projectId: "fringemessenger",
+                storageBucket: "fringemessenger.appspot.com",
+                messagingSenderId: "884337049235",
+                appId: "1:884337049235:web:de3d234af05f18459e9766",
+                measurementId: "G-FPSVVRXJCP"
+              };
+
+              // Initialize Firebase
+              firebase.initializeApp(firebaseConfig);
+
+              // make auth and firestore references
+              const auth = firebase.auth();
+              const db = firebase.firestore();
+            </script>
+
+            <script src="js/auth-register.js"></script>
+          </form>
+        </div>
+      </div>
+      <!-- end of container -->
+    </div>
+
+    <script src="js/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true
+      });
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

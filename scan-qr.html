@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <!-- fontawesome CSS -->
+    <link rel="stylesheet" href="css/fontawesome.css" />
+    <!-- fontawesome JS -->
+    <script src="js/fontawesome.js"></script>
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/scroll.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+
+    <title>WE</title>
+  </head>
+
+  <body>
+    <div class="aos-wrapper" data-aos="fade" data-aos-duration="2000">
+      <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+          <div id="dismiss">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+
+          <div class="sidebar-header pt-5 pb-1 pl-2">
+            <p id="usernameDiv" class="usernameDiv"></p>
+          </div>
+
+          <ul class="list-unstyled components">
+            <li>
+              <a href="home.html">Home<i class="fas fa-home"></i></a>
+            </li>
+            <li>
+              <a href="new-chat.html"
+                ><i class="fas fa-comment-alt"></i>New Chat</a
+              >
+            </li>
+            <li>
+              <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+            </li>
+            <li>
+              <a href="about-fringe.html"
+                ><i class="fas fa-globe-asia"></i>About</a
+              >
+            </li>
+            <li>
+              <a href="#" id="logout"
+                ><i class="fas fa-sign-out-alt"></i>Logout</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+          <div class="navbar-custom pl-3 pt-3 pb-3">
+            <table>
+              <tr>
+                <td>
+                  <i
+                    class="fas fa-align-left open-button"
+                    id="sidebarCollapse"
+                  ></i>
+                </td>
+                <td>
+                  <img
+                    src="images/fringe-logo-trans.png"
+                    alt=""
+                    class="logo-small"
+                  />
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="container mt-5">
+            <h6 class="text-justify mb-4 mt-3">
+              Scan the QR Code generated on the other phone to start a
+              conversation.
+            </h6>
+            <input
+              id="qrCodeDataInput"
+              type="password"
+              placeholder="QR Code Data"
+              class="qrcode-text"
+            /><label class="qrcode-text-btn"
+              ><input
+                class="qr-input"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onchange="openQRCamera(this);"
+                tabindex="-1"
+            /></label>
+            <button
+              id="generateCodeButton"
+              class="btn orange-btn mt-3"
+              onclick="generateCode()"
+            >
+              Next
+            </button>
+            <div
+              class="mt-3 mb-2 codeHeadingContainer"
+              id="codeHeadingContainer"
+            >
+              Please enter this code on the other phone.
+            </div>
+            <div class="code-container mt-3" id="codeContainer"></div>
+            <button
+              id="startConversationButton"
+              class="btn orange-btn mt-3"
+              onclick="startConversation()"
+              style="display: none;"
+            >
+              Start Conversation
+            </button>
+          </div>
+          <div class="d-flex justify-content-center mt-3">
+            <span
+              id="buttonLoader"
+              class="spinner-grow spinner-grow-sm"
+              role="status"
+              aria-hidden="true"
+              style="display: none;"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay"></div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="js/sidebar.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#sidebar").mCustomScrollbar({
+          theme: "minimal"
+        });
+
+        $("#dismiss, .overlay").on("click", function() {
+          $("#sidebar").removeClass("active");
+          $(".overlay").removeClass("active");
+        });
+
+        $("#sidebarCollapse").on("click", function() {
+          $("#sidebar").addClass("active");
+          $(".overlay").addClass("active");
+          $(".collapse.in").toggleClass("in");
+          $("a[aria-expanded=true]").attr("aria-expanded", "false");
+        });
+      });
+    </script>
+
+    <!-- end of container -->
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
+
+    <!-- <script src="js/firebase-init.js"></script> -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyB6qk-px-fufpKLrjKJi2OCZ9hZN3ydmDs",
+        authDomain: "fringemessenger.firebaseapp.com",
+        databaseURL: "https://fringemessenger.firebaseio.com",
+        projectId: "fringemessenger",
+        storageBucket: "fringemessenger.appspot.com",
+        messagingSenderId: "884337049235",
+        appId: "1:884337049235:web:de3d234af05f18459e9766",
+        measurementId: "G-FPSVVRXJCP"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // make auth and firestore references
+
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+    </script>
+    <script src="js/auth-home.js"></script>
+    <script src="js/auth-logout.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script src="js/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true
+      });
+    </script>
+    <script src="js/qr.js"></script>
+    <script>
+      // getting my name from firestore
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          var uid = firebase.auth().currentUser.uid;
+          var docRef = db.collection("userInfo").doc(uid);
+          docRef
+            .get()
+            .then(function(doc) {
+              if (doc.exists) {
+                var stringifiedData = JSON.stringify(doc.data());
+                var parsedData = JSON.parse(stringifiedData);
+                window.fullName = parsedData.fullName;
+                console.log(fullName);
+              } else {
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+          // end of document querying
+        }
+      });
+
+      function openQRCamera(node) {
+        var reader = new FileReader();
+        reader.onload = function() {
+          node.value = "";
+          qrcode.callback = function(res) {
+            if (res instanceof Error) {
+              alert(
+                "No QR code found. Please make sure the QR code is within the camera's frame and try again."
+              );
+            } else {
+              node.parentNode.previousElementSibling.value = res;
+            }
+          };
+          qrcode.decode(reader.result);
+        };
+        reader.readAsDataURL(node.files[0]);
+      }
+
+      function generateCode() {
+        // check if input has a value
+        var input = document.getElementById("qrCodeDataInput").value;
+        if (input === "") {
+        } else {
+          // disable the button first
+          var submitButton = document.getElementById("generateCodeButton");
+          submitButton.setAttribute("disabled", "");
+
+          // to generate code
+          window.code = Math.floor(100000 + Math.random() * 900000);
+
+          // to show the code to the user
+          document.getElementById("codeContainer").innerHTML = code;
+          document.getElementById("codeHeadingContainer").style.display =
+            "block";
+          document.getElementById("codeContainer").style.display = "block";
+          var x = document.getElementById("qrCodeDataInput").value;
+          document.getElementById("startConversationButton").style.display =
+            "block";
+
+          // get details from the QR Code
+          // get QR Code data
+          var qrData = document.getElementById("qrCodeDataInput").value;
+          var qrDataArray = qrData.split(" ");
+
+          var participant = qrDataArray[0];
+
+          // getting participant name from firestore
+          var docRef = db.collection("userInfo").doc(participant);
+
+          docRef
+            .get()
+            .then(function(doc) {
+              if (doc.exists) {
+                console.log("Document data:", doc.data());
+                var stringifiedData = JSON.stringify(doc.data());
+                var parsedData = JSON.parse(stringifiedData);
+                var participantName = parsedData.fullName;
+                var uid = firebase.auth().currentUser.uid;
+                console.log(uid);
+
+                // post code and details to codes table
+                $.ajax({
+                  type: "POST",
+                  url: "https://api.scopelife.in/insert-code.php",
+                  datatype: "html",
+                  data: {
+                    uid: uid,
+                    fullName: fullName,
+                    participant: participant,
+                    participantName: participantName,
+                    code: code
+                  },
+                  success: function(response) {},
+                  error: function(error) {}
+                });
+              } else {
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+          // end of document querying
+        }
+      }
+
+      function startConversation() {
+        // disable the button first
+        var submitButton = document.getElementById("startConversationButton");
+        submitButton.setAttribute("disabled", "");
+        // show a loader on the button
+        var buttonLoader = document.getElementById("buttonLoader");
+        buttonLoader.style.display = "block";
+
+        window.location.replace("home.html");
+      }
+    </script>
+  </body>
+</html>
