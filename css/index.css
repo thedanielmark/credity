@@ -86,7 +86,7 @@ body {
 
 .logo-small {
   vertical-align: top;
-  width: 13vw;
+  width: 8vw;
   height: auto;
 }
 
@@ -121,7 +121,7 @@ body {
 
 .orange-btn {
   padding: 10px 10px;
-  font-size: 5vw;
+  font-size: 3.5vw;
   font-weight: bold;
   width: 100%;
   border-radius: 3px;
@@ -140,7 +140,7 @@ body {
 }
 
 .input-box {
-  padding: 25px 10px;
+  padding: 10px 10px;
   color: rgb(30, 30, 30);
   border: 1px solid rgb(86, 43, 154);
   border-radius: 3px;
@@ -150,9 +150,6 @@ body {
   border: 1px solid rgb(86, 43, 154);
   border-radius: 1px;
   outline: none;
-  -webkit-box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
 }
 
 /* Firefox old*/
@@ -216,6 +213,23 @@ body {
 }
 
 .header {
-  background-color: #6200ee;
+  background: #8e2de2;
+  background: -webkit-linear-gradient(315deg, #4a00e0, #8e2de2);
+  background: linear-gradient(315deg, #4a00e0, #8e2de2);
   color: #fff;
+  font-size: 5vw;
+  font-weight: 800;
+}
+
+.progressCircle {
+  margin: 20px;
+  width: 35vw;
+  height: 35vw;
+  position: relative;
+}
+
+.shadow {
+  -webkit-box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 30px -9px rgba(0, 0, 0, 0.75);
 }

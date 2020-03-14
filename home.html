@@ -26,13 +26,93 @@
   <body>
     <div class="aos-wrapper" data-aos="fade" data-aos-duration="2000">
       <div class="wrapper">
-        <div class="header">
-          <h5 class="d-flex justify-content-center">
-            Hello
-          </h5>
-          <h5 id="fullNameContainer" class="d-flex justify-content-center"></h5>
+        <div class="d-flex justify-content-center header pt-3 pb-3">
+          <table>
+            <tr>
+              <td>
+                <img
+                  src="images/logo-white.png"
+                  alt="Logo"
+                  class="logo-small"
+                />
+              </td>
+              <td>
+                Credity
+              </td>
+            </tr>
+          </table>
+
           <!-- end of header -->
         </div>
+
+        <!-- cards -->
+        <div class="container mt-3">
+          <table>
+            <tr>
+              <td>
+                <div class="progressCircle" id="totalProgress"></div>
+              </td>
+              <td>
+                <div class="progressCircle" id="balanceProgress"></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Balance
+              </td>
+              <td>
+                Expenditure
+              </td>
+            </tr>
+          </table>
+
+          <!-- end of container -->
+        </div>
+
+        <div id="cardsContainer" class="col-12 mt-3 mb-3">
+          <div class="card shadow">
+            <div class="card-body">
+              <h6 class="card-title">Add a transaction</h6>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control input-box"
+                  id="transaction_name"
+                  aria-describedby="transaction_name"
+                  placeholder="Give it a name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control input-box"
+                  id="amount"
+                  aria-describedby="amount"
+                  placeholder="Enter amount"
+                  required
+                />
+              </div>
+              <button class="btn orange-btn" onclick="addValuesToDb()">
+                Add transaction
+              </button>
+            </div>
+          </div>
+          <!-- end of col -->
+          <div class="card mt-3 shadow p-0">
+            <div class="card-body">
+              <h5 class="p-1">Your transactions</h5>
+              <p>
+                Hi
+                <script>
+                  document.writeln(localStorage.fullName + "! ");
+                </script>
+                View a list of your transactions below.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <!-- end of wrapper -->
       </div>
     </div>
@@ -41,6 +121,38 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/progress.js"></script>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyA7AjLxkFnhwpCpJKxCVdGfdQyFnL0PSaM",
+        authDomain: "credity00.firebaseapp.com",
+        databaseURL: "https://credity00.firebaseio.com",
+        projectId: "credity00",
+        storageBucket: "credity00.appspot.com",
+        messagingSenderId: "44292705560",
+        appId: "1:44292705560:web:dd575d99567cd7772e626d",
+        measurementId: "G-CSY703R1WV"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // make auth and firestore references
+
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+    </script>
 
     <!-- end of container -->
 
@@ -50,9 +162,179 @@
         once: true
       });
     </script>
+
     <script>
-      document.getElementById("fullNameContainer").innerHTML =
-        localStorage.fullName;
+      // declaring total and balance as global variables
+      window.total = Number(localStorage.total);
+      window.totalExpenditure = 0;
+
+      function getTotalProgress(currentBalance) {
+        // total progress
+        var bar = new ProgressBar.Circle(totalProgress, {
+          color: "#aaa",
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 4,
+          trailWidth: 1,
+          easing: "easeInOut",
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: "#aaa", width: 1 },
+          to: { color: "#8e2de2", width: 4 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute("stroke", state.color);
+            circle.path.setAttribute("stroke-width", state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText("");
+            } else {
+              circle.setText(value);
+            }
+          }
+        });
+        bar.text.style.fontSize = "2rem";
+        bar.animate(currentBalance); // Number from 0.0 to 1.0
+        // end of total progress
+      }
+
+      function getBalanceProgress(currentExpenditure) {
+        var bar = new ProgressBar.Circle(balanceProgress, {
+          color: "#aaa",
+          // This has to be the same size as the maximum width to
+          // prevent clipping
+          strokeWidth: 4,
+          trailWidth: 1,
+          easing: "easeInOut",
+          duration: 1400,
+          text: {
+            autoStyleContainer: false
+          },
+          from: { color: "#aaa", width: 1 },
+          to: { color: "#4a00e0", width: 4 },
+          // Set default step function for all animate calls
+          step: function(state, circle) {
+            circle.path.setAttribute("stroke", state.color);
+            circle.path.setAttribute("stroke-width", state.width);
+
+            var value = Math.round(circle.value() * 100);
+            if (value === 0) {
+              circle.setText("");
+            } else {
+              circle.setText(value);
+            }
+          }
+        });
+        bar.text.style.fontSize = "2rem";
+        bar.animate(currentExpenditure); // Number from 0.0 to 1.0
+        // end of balance progress
+      }
+
+      function addValuesToDb() {
+        var transaction_name = document.getElementById("transaction_name")
+          .value;
+        var amount = document.getElementById("amount").value;
+
+        var newDocRef = db.collection("transactions").doc();
+        newDocRef
+          .set({
+            name: transaction_name,
+            amount: amount,
+            date: firebase.firestore.FieldValue.serverTimestamp()
+          })
+          .catch(function(error) {
+            console.error("Error adding document: ", error);
+          });
+        setInterval(redirect, 1000);
+      }
+
+      function redirect() {
+        window.location.replace("home.html");
+      }
+
+      getValuesFromDb();
+
+      async function getValuesFromDb() {
+        const snapshot = await firebase
+          .firestore()
+          .collection("transactions")
+          .orderBy("date", "desc")
+          .get();
+        snapshot.forEach(doc => {
+          // create cards here
+          var col = document.createElement("div");
+          col.setAttribute("class", "card shadow mt-3 mb-3");
+
+          var cardBody = document.createElement("div");
+          cardBody.setAttribute("class", "card-body");
+
+          // creating the heading element to store the name
+          var heading = document.createElement("h5");
+          heading.setAttribute("class", "card-title");
+
+          // creating the heading content inside a textnode
+          var headingText = document.createTextNode(doc.data().name);
+          heading.appendChild(headingText);
+
+          // creating the paragraph to hold card text
+          var para = document.createElement("p");
+          para.setAttribute("class", "card-text");
+
+          // creating the span inside para
+          var span = document.createElement("span");
+          span.setAttribute("class", "badge badge-dark");
+
+          // creating the delete button
+          var del = document.createElement("button");
+          del.setAttribute("class", "btn orange-btn mt-3");
+          del.setAttribute("onclick", "deleteTransaction('" + doc.id + "')");
+
+          var spanText = document.createTextNode("Rs. " + doc.data().amount);
+
+          var delText = document.createTextNode("Delete Transaction");
+
+          col.appendChild(cardBody);
+          span.appendChild(spanText);
+          cardBody.appendChild(heading);
+          cardBody.appendChild(span);
+          del.appendChild(delText);
+          cardBody.appendChild(del);
+
+          document.getElementById("cardsContainer").appendChild(col);
+
+          // calculating totaL expenditure
+          var x = Number(doc.data().amount);
+          window.totalExpenditure += x;
+          console.log("Total Exp: " + totalExpenditure);
+        });
+        console.log("Total Exp outside func: " + totalExpenditure);
+        // call totalExpenditure printing function here
+        var currentFloatExpenditure = totalExpenditure / total;
+        console.log(currentFloatExpenditure);
+        currentExpenditure = currentFloatExpenditure.toFixed(1);
+        console.log(currentExpenditure);
+        getBalanceProgress(currentExpenditure);
+
+        // call balance function
+        currentBalance = 1 - currentExpenditure;
+        getTotalProgress(currentBalance);
+      }
+
+      function deleteTransaction(docID) {
+        db.collection("transactions")
+          .doc(docID)
+          .delete()
+          .then(function() {
+            console.log("Document successfully deleted!");
+            window.location.replace("home.html");
+          })
+          .catch(function(error) {
+            console.error("Error removing document: ", error);
+          });
+      }
     </script>
   </body>
 </html>
